@@ -5,7 +5,7 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('welcome') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
@@ -14,6 +14,18 @@
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('workshops.create')" :active="request()->routeIs('workshops.create')">
+                        {{ __('Create Workshop') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
+                        {{ __('All Students') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('students.create')" :active="request()->routeIs('students.create')">
+                        {{ __('Sign Up') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('getting-in.index')" :active="request()->routeIs('getting-in.index')">
+                        {{ __('Getting In') }}
                     </x-nav-link>
                 </div>
             </div>
@@ -69,6 +81,18 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('workshops.create')" :active="request()->routeIs('workshops.create')">
+                {{ __('Create Workshop') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('students.index')" :active="request()->routeIs('students.index')">
+                {{ __('All Students') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('students.create')" :active="request()->routeIs('students.create')">
+                {{ __('Sign Up') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('getting-in.index')" :active="request()->routeIs('getting-in.index')">
+                {{ __('Getting In') }}
             </x-responsive-nav-link>
         </div>
 
