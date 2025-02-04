@@ -14,7 +14,8 @@ class GettingInController extends Controller
     {
         $students = Student::all();
         $workshops = Workshop::all();
-        return view('getting-in.index', compact('students', 'workshops'));
+        $selected_workshop = $workshops->first()->id;
+        return view('getting-in.index', compact('students', 'workshops', 'selected_workshop'));
     }
 
     public function store(Request $request)
@@ -48,6 +49,18 @@ class GettingInController extends Controller
         $sessionNumber = intdiv($index, $workshop->days_per_session) + 1;
         $dayNumber = ($index % $workshop->days_per_session) + 1;
 
+        // Check if attendance is already marked for any day in the current session
+        for ($day = 1; $day <= $workshop->days_per_session; $day++) {
+            $attendanceField = 'session_' . $sessionNumber . '_' . $day . '_attendance';
+            $existingAttendance = DB::table('workshop_' . $workshop->id)
+                ->where('student_id', $student->id)
+                ->value($attendanceField);
+
+            if ($existingAttendance) {
+                return redirect()->back()->withErrors(['error' => 'Attendance is already marked for this session.']);
+            }
+        }
+
         // Calculate total fees
         if (!$student->volunteer) {
             $totalFees = $workshop->fees + ($request->has('insurance') ? $workshop->insurance : 0);
@@ -71,6 +84,6 @@ class GettingInController extends Controller
             ]
         );
 
-        return redirect()->route('getting-in.index')->with('success', 'Student enrolled and attendance marked.');
+        return redirect()->route('getting-in.index', ['selected_workshop'])->with('success', 'Student enrolled and attendance marked.');
     }
 }

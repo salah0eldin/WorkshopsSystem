@@ -24,6 +24,18 @@
     </style>
     <div class="py-12">
         <div class="container mx-auto">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    @foreach($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
             <form method="POST" action="{{ route('enroll.store') }}" class="col-12">
                 @csrf
                 <input type="hidden" name="workshop_id" id="workshop_id">
@@ -149,11 +161,13 @@
         document.addEventListener('DOMContentLoaded', function () {
             const students = @json($students);
 
-            // Workshop selection logic
-            document.getElementById('workshop').addEventListener('change', function () {
-                const workshopId = this.value;
+            const selectedWorkshopOption = document.querySelector(`#workshop option[value='{{$selected_workshop}}']`);
+            selectedWorkshopOption.selected = true;
+            updateWorkshop({{$selected_workshop}}, selectedWorkshopOption);
+            
+            function updateWorkshop(workshop_id, selectedOption) {
+                const workshopId = workshop_id;
                 document.getElementById('workshop_id').value = workshopId;
-                const selectedOption = this.options[this.selectedIndex];
                 const fees = selectedOption.getAttribute('data-fees');
                 const insurance = selectedOption.getAttribute('data-insurance');
                 const numberOfGroups = parseInt(selectedOption.getAttribute('data-groups')) || 1;
@@ -165,6 +179,13 @@
                 document.getElementById('groupNumber').value = getDefaultGroupNumber();
 
                 calculateRemaining();
+            }
+
+            // Workshop selection logic
+            document.getElementById('workshop').addEventListener('change', function () {
+                const workshopId = this.value;
+                const selectedOption = this.options[this.selectedIndex];
+                updateWorkshop(workshopId, selectedOption);
             });
 
             document.getElementById('payAmount').addEventListener('input', calculateRemaining);
@@ -325,7 +346,7 @@
 
                         // Set insurance status
                         insuranceCheckbox.checked = data.data?.insurance || false;
-                        insuranceCheckbox.value =insuranceCheckbox.checked;
+                        insuranceCheckbox.value = insuranceCheckbox.checked;
                         insuranceCheckbox.disabled = data.data?.insurance; // Disable if already has insurance
                     }
                     calculateRemaining();

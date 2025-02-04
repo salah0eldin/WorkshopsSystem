@@ -40,6 +40,8 @@
             /* Set your desired maximum width */
             word-wrap: break-word;
             /* Allow text to wrap if it exceeds max-width */
+            text-align: left;
+            /* Left align the content */
         }
     </style>
 
@@ -47,7 +49,7 @@
         <div class="container mx-auto">
             <div class="d-flex justify-content-center">
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped text-center">
                         <thead>
                             <tr>
                                 <th>ID</th>
