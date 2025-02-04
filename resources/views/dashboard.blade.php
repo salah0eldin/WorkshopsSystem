@@ -17,10 +17,10 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="table-responsive">
-                    <table class="table table-striped table-centered">
+                    <table class="table table-striped table-bordered table-centered text-center">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th style="text-align: left;">Name</th>
                                 <th>Date of Beginning</th>
                                 <th>Number of Sessions</th>
                                 <th>Days per Session</th>
@@ -35,7 +35,7 @@
                         <tbody>
                             @foreach($workshops as $workshop)
                                 <tr>
-                                    <td>{{ $workshop->name }}</td>
+                                    <td style="text-align: left;">{{ $workshop->name }}</td>
                                     <td>{{ $workshop->date_of_beginning }}</td>
                                     <td>{{ $workshop->number_of_sessions }}</td>
                                     <td>{{ $workshop->days_per_session }}</td>

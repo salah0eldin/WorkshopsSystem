@@ -49,7 +49,7 @@
         <div class="container mx-auto">
             <div class="d-flex justify-content-center">
                 <div class="table-responsive">
-                    <table class="table table-striped text-center">
+                    <table class="table table-striped table-bordered text-center">
                         <thead>
                             <tr>
                                 <th>ID</th>
