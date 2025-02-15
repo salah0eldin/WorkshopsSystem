@@ -83,7 +83,11 @@ class GettingInController extends Controller
                 'session_' . $sessionNumber . '_' . $dayNumber . '_group_number' => $groupNumber,
             ]
         );
-
-        return redirect()->route('getting-in.index', ['selected_workshop'])->with('success', 'Student enrolled and attendance marked.');
+        
+        $students = Student::all();
+        $workshops = Workshop::all();
+        $selected_workshop = $workshop->id;
+        return view('getting-in.index', compact('students', 'workshops', 'selected_workshop'))->with('success', 'Student enrolled and attendance marked.');
+        // return redirect()->route('getting-in.index', ['selected_workshop'])->with('success', 'Student enrolled and attendance marked.');
     }
 }

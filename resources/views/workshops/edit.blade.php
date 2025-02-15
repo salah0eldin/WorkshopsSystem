@@ -107,8 +107,21 @@
                     </div>
                 </div>
 
-                <!-- Submit Button -->
-                <button type="submit" class="btn btn-primary mt-4">Update Workshop</button>
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary">Update Workshop</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Delete Form moved outside update form -->
+            <form action="{{ route('workshops.destroy', $workshop->id) }}" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this workshop? This action cannot be undone.');"
+                class="mt-4">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Delete Workshop</button>
             </form>
         </div>
     </div>

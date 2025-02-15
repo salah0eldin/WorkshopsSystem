@@ -23,7 +23,20 @@
                     <input type="checkbox" class="form-check-input" id="volunteer" name="volunteer" {{ $student->volunteer ? 'checked' : '' }}>
                     <label class="form-check-label" for="volunteer">Volunteer</label>
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Update Student</button>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-primary">Update Student</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Delete Form moved outside update form -->
+            <form action="{{ route('students.destroy', $student->id) }}" method="POST"
+                onsubmit="return confirm('Are you sure you want to delete this student? This action cannot be undone.');"
+                class="mt-4">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Delete Student</button>
             </form>
         </div>
     </div>

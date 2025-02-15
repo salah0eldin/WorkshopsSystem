@@ -59,18 +59,19 @@ class WorkshopDataController extends Controller
             'session_dates' => 'required|array',
         ]);
 
-        // Validate the number of selected dates
-        // $expectedDates = $workshop->number_of_sessions * $workshop->days_per_session;
-        // if (count($validated['session_dates']) != $expectedDates) {
-        //     return redirect()->back()->withErrors(['session_dates' => "The number of selected dates does not match the expected total of $expectedDates dates."])->withInput();
-        // }
+        // Retrieve existing session dates or empty array
+        $existingDates = $workshop->session_dates ?? [];
 
-        // Store the session dates
-        $workshop->session_dates = $validated['session_dates'];
+        // Merge new dates with existing dates (preserving all unique dates)
+        $mergedDates = array_values(array_unique(array_merge($existingDates, $validated['session_dates'])));
+
+        // Save the merged session dates
+        $workshop->session_dates = $mergedDates;
         $workshop->save();
 
         return redirect()->route('workshops.show', $workshop->id)->with('success', 'Session dates saved successfully!');
     }
+
     public function saveAnalysis(Request $request, $id)
     {
         $workshop = Workshop::findOrFail($id);

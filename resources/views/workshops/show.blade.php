@@ -44,7 +44,7 @@
                                                                 $currentDate = $startDate->copy()->addDays(($week * 7) + $day);
                                                                 $isPast = $currentDate->lt($today);
                                                                 $sessionDates = $workshop->session_dates ?? [];
-                                                                $checked = in_array($currentDate->format('Y-m-d'), $sessionDates) ? 'checked' : '';
+                                                                $isChecked = in_array($currentDate->format('Y-m-d'), $sessionDates);
                                                             @endphp
 
                                                             <div class="col day-cell {{ $isPast ? 'past-day' : '' }}">
@@ -52,7 +52,7 @@
                                                                     {{ $currentDate->format('d M') }}
                                                                 </div>
                                                                 <div class="session-checkbox">
-                                                                    <input type="checkbox" name="session_dates[]" value="{{ $currentDate->format('Y-m-d') }}" {{ $isPast ? 'disabled' : '' }} {{ $checked }}>
+                                                                    <input type="checkbox" title="{{ $day }}" name="session_dates[]" value="{{ $currentDate->format('Y-m-d') }}"  {{ $isChecked ? 'checked' : '' }} {{ $isPast ? 'disabled' : '' }}>
                                                                 </div>
                                                             </div>
                                         @endfor
@@ -225,7 +225,7 @@
                     @foreach($students as $student)
                                     <tr>
                                         <td style="border-left: 4px solid #343a40;">{{ $student->student_id }}</td>
-                                        <td>{{ $student->student_name }}</td>
+                                        <td style="text-align: left;">{{ $student->student_name }}</td>
                                         <td>{{ $student->volunteer ? '✔️' : '' }}</td>
                                         <td class="section-divider">{{ $student->insurance ? '✔️' : '' }}</td>
                                         @for($day = 1; $day <= $workshop->days_per_session; $day++)

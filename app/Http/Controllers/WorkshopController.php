@@ -183,6 +183,22 @@ class WorkshopController extends Controller
      */
     public function destroy(Workshop $workshop)
     {
-        //
+        // Drop the workshop attendance table
+        \Schema::dropIfExists('workshop_' . $workshop->id);
+
+        // Drop the workshop analysis table
+        \Schema::dropIfExists('analysis_' . $workshop->id);
+
+        // Remove the workshop column from students table if it exists
+        \Schema::table('students', function (\Illuminate\Database\Schema\Blueprint $table) use ($workshop) {
+            if (\Schema::hasColumn('students', 'workshop_' . $workshop->id)) {
+                $table->dropColumn('workshop_' . $workshop->id);
+            }
+        });
+
+        // Delete the workshop record
+        $workshop->delete();
+
+        return redirect()->route('workshops.index')->with('success', 'Workshop deleted successfully!');
     }
 }

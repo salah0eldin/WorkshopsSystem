@@ -91,7 +91,7 @@
                     </header>
 
                     <main class="mt-6">
-                        <h1 class="text-4xl font-bold text-center mb-8">Welcome to Workshops System</h1>
+                        <h1 class="text-4xl font-bold text-center mb-8">Welcome to Sigma Workshops</h1>
                         <div class="grid gap-6 lg:grid-cols-3 lg:gap-8 mt-6">
                             <div class="flex flex-col items-start gap-4 rounded-lg bg-white p-6 shadow-md ring-1 ring-gray-200 transition duration-300 hover:text-black/70 hover:ring-black/20 focus:outline-none focus-visible:ring-[#FF2D20] dark:bg-gray-800 dark:ring-gray-700 dark:hover:text-white/70 dark:hover:ring-gray-600 dark:focus-visible:ring-[#FF2D20]">
                                 <h2 class="text-xl font-semibold text-black dark:text-white">Robotics</h2>

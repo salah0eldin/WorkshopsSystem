@@ -27,6 +27,15 @@
                     <x-nav-link :href="route('getting-in.index')" :active="request()->routeIs('getting-in.index')">
                         {{ __('Getting In') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('students.cash')" :active="request()->routeIs('students.cash')">
+                        {{ __('Manage Cash') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index')">
+                        {{ __('Transactions') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('money-analysis.index')" :active="request()->routeIs('money-analysis.index')">
+                        {{ __('Money Analysis') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -93,6 +102,15 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('getting-in.index')" :active="request()->routeIs('getting-in.index')">
                 {{ __('Getting In') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('students.cash')" :active="request()->routeIs('students.cash')">
+                {{ __('Manage Cash') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('transactions.index')" :active="request()->routeIs('transactions.index')">
+                {{ __('Transactions') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('money-analysis.index')" :active="request()->routeIs('money-analysis.index')">
+                {{ __('Money Analysis') }}
             </x-responsive-nav-link>
         </div>
 

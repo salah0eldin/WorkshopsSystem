@@ -7,6 +7,7 @@ use App\Http\Controllers\WorkshopController;
 use App\Http\Controllers\WorkshopDataController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\GettingInController;
+use App\Http\Controllers\MoneyAnalysisController;
 
 Route::get('/', function () {
     return view(view: 'welcome');
@@ -18,15 +19,18 @@ Route::get('/', function () {
 
 Route::middleware(AdminMiddleware::class)->group(function () {
     Route::get('/dashboard', [WorkshopController::class, 'index'])->name('dashboard');
-    Route::resource('workshops', controller: WorkshopController::class);      
-    Route::resource('students', controller: StudentsController::class);   
+    Route::resource('workshops', controller: WorkshopController::class);
+    Route::get('/students/cash', [StudentsController::class, 'cash'])->name('students.cash');
+    Route::post('/updateCash', [StudentsController::class, 'updateCash'])->name('students.updateCash');
+    Route::resource('students', controller: StudentsController::class);
     Route::post('/workshops/{workshop}/sessions', [WorkshopDataController::class, 'storeSessions'])->name('workshops.storeSessions');
     Route::post('/workshops/{id}/save-analysis', [WorkshopDataController::class, 'saveAnalysis'])->name('workshops.saveAnalysis');
     Route::get('/workshop-data', [WorkshopDataController::class, 'getFirstData'])->name('workshop-data.first');
 
     Route::get('/getting-in', [GettingInController::class, 'index'])->name('getting-in.index');
     Route::post('/enroll', [GettingInController::class, 'store'])->name('enroll.store');
-
+    Route::get('/transactions', [StudentsController::class, 'transactions'])->name('transactions.index');
+    Route::get('/money-analysis', [MoneyAnalysisController::class, 'index'])->name('money-analysis.index');
 });
 
 Route::middleware('auth')->group(function () {

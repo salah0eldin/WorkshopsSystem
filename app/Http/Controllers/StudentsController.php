@@ -77,20 +77,50 @@ class StudentsController extends Controller
 
         return redirect()->route('students.index')->with('success', 'Student updated successfully!');
     }
-    // public function search(Request $request)
-    // {
-    //     $query = $request->get('query');
-    //     $field = $request->get('field');
 
-    //     // Validate the field to ensure it's one of the allowed columns
-    //     if (!in_array($field, ['name', 'phone', 'id'])) {
-    //         return response()->json([], 400); // Return an empty response with a 400 status code
-    //     }
+    public function updateCash(Request $request)
+    {
+        $request->validate([
+            'id' => 'required|exists:students,id',
+            'amount' => 'required|numeric|min:0',
+            'type' => 'required|in:deposit,withdraw',
+        ]);
 
-    //     $students = Student::where($field, 'LIKE', "%{$query}%")
-    //         ->take(5)
-    //         ->get();
+        $student = Student::findOrFail($request->id);
+        $amount = $request->amount;
+        $type = $request->type;
 
-    //     return response()->json($students);
-    // }
+        if ($type == 'deposit') {
+            $student->pocket += $amount;
+        } elseif ($type == 'withdraw') {
+            $student->pocket -= $amount;
+        }
+
+        $student->save();
+
+        $logMessage = now() . " - StudentID: {$student->id} ";
+        $logMessage .= ($type == 'deposit' ? "Deposited" : "Withdrew") . " {$amount}. ";
+        $logMessage .= "New pocket balance: {$student->pocket}" . PHP_EOL;
+        file_put_contents(storage_path('logs/money_transactions.log'), $logMessage, FILE_APPEND);
+
+        return redirect()->route('students.cash')->with('success', 'Student pocket updated successfully! New pocket balance: ' . $student->pocket);
+    }
+
+    public function transactions()
+    {
+        $filePath = storage_path('logs/money_transactions.log');
+        $logs = file_exists($filePath) ? file($filePath, FILE_IGNORE_NEW_LINES) : [];
+        return view('transactions.index', compact('logs'));
+    }
+
+    public function cash(){
+        $students = Student::all();
+        return view('students.cash', compact('students'));
+    }
+
+    public function destroy(Student $student)
+    {
+        $student->delete();
+        return redirect()->route('students.index')->with('success', 'Student deleted successfully!');
+    }
 }
